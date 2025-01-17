@@ -32,10 +32,16 @@ final class JeuPlateauFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'dimension_plateau' => self::faker()->text(255),
-            'nb_case' => self::faker()->randomNumber(),
-            'nb_participant' => self::faker()->randomNumber(),
-            'nom' => self::faker()->text(255),
+
+            'dimension_plateau' => self::faker()->randomElement(['30x30 cm', '50x50 cm', '70x70 cm']),
+            'nb_case' => self::faker()->numberBetween(10, 100),
+            'nb_participant' => self::faker()->numberBetween(2, 6),
+            'nom' => self::faker()->words(3, true), // Exemple : "Aventure épique"
+
+            // 'dimension_plateau' => self::faker()->text(255),
+            // 'nb_case' => self::faker()->randomNumber(),
+            // 'nb_participant' => self::faker()->randomNumber(),
+            // 'nom' => self::faker()->text(255),
         ];
     }
 
