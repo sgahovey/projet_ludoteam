@@ -1,20 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello JeuController!{% endblock %}
+{% block title %}Liste des Jeux{% endblock %}
 
 {% block body %}
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .example-wrapper table { width: 100%; border-collapse: collapse; }
+    .example-wrapper th, .example-wrapper td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .example-wrapper th { background-color: #f2f2f2; }
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Liste des Jeux</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/expernet/projet_ludoteam/src/Controller/JeuController.php</code></li>
-        <li>Your template at <code>D:/expernet/projet_ludoteam/templates/jeu/index.html.twig</code></li>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Nombre de Participants</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jeu in jeux %}
+                <tr>
+                    <td>{{ jeu.id }}</td>
+                    <td>{{ jeu.nom }}</td>
+                    <td>{{ jeu.nbParticipant }}</td>
+                    {# <td>{{ jeu.type }}</td> #}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun jeu trouvé.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
