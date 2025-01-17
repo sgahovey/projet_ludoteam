@@ -62,4 +62,9 @@ class Jeu
         return $this;
     }
 
+    public function getType():string
+    {
+        $class = (new \ReflectionClass($this))->getShortName();;
+        return strtolower($class);
+        }
 }
