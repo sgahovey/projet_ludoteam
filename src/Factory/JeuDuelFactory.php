@@ -32,10 +32,16 @@ final class JeuDuelFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'dureeMax' => self::faker()->randomNumber(),
-            'nb_participant' => self::faker()->randomNumber(),
-            'nom' => self::faker()->text(255),
-            'type_adversaire' => self::faker()->text(255),
+
+            'dureeMax' => self::faker()->numberBetween(30, 120),    // Durée en minutes
+            'nb_participant' => 2,                                  // Les jeux de duel impliquent 2 participants
+            'nom' => self::faker()->words(3, true),                  // Exemple : "Combat épique"
+            'type_adversaire' => self::faker()->randomElement(['Robot', 'Humain']), // Valeurs réalistes
+
+            // 'dureeMax' => self::faker()->randomNumber(),
+            // 'nb_participant' => self::faker()->randomNumber(),
+            // 'nom' => self::faker()->text(255),
+            // 'type_adversaire' => self::faker()->text(255),
         ];
     }
 
