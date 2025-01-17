@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Jeu;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\JeuDuel;
+use App\Entity\JeuCarte;
+use App\Entity\JeuPlateau;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Jeu>
@@ -16,28 +19,34 @@ class JeuRepository extends ServiceEntityRepository
         parent::__construct($registry, Jeu::class);
     }
 
-    //    /**
-    //     * @return Jeu[] Returns an array of Jeu objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('j')
-    //            ->andWhere('j.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('j.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+   /**
+     * Récupère les attributs d'un jeu en fonction de son type.
+     *
+     * @param int $id L'ID du jeu
+     * @return array Les attributs du jeu
+     */
+    public function findAttributsByJeuType(int $id): array
+    {
+        // Récupérer le jeu par son ID
+        $jeu = $this->find($id);
 
-    //    public function findOneBySomeField($value): ?Jeu
-    //    {
-    //        return $this->createQueryBuilder('j')
-    //            ->andWhere('j.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $attributs = [];
+
+        // Déterminer le type de jeu et ajouter le type
+        if ($jeu instanceof JeuCarte) {
+            $attributs['type'] = 'Jeu de Carte';
+            $attributs['format'] = $jeu->getFormat();
+            $attributs['joker_inclus'] = $jeu->isJokerInclus() ? 'Oui' : 'Non';
+        } elseif ($jeu instanceof JeuDuel) {
+            $attributs['type'] = 'Jeu de Duel';
+            $attributs['dureeMax'] = $jeu->getDureeMax();
+            $attributs['type_adversaire'] = $jeu->getTypeAdversaire();
+        } elseif ($jeu instanceof JeuPlateau) {
+            $attributs['type'] = 'Jeu de Plateau';
+            $attributs['dimension_plateau'] = $jeu->getDimensionPlateau();
+            $attributs['nb_case'] = $jeu->getNbCase();
+        }
+
+        return $attributs;
+    }
 }

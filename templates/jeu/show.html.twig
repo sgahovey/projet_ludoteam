@@ -1,30 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Jeu{% endblock %}
-
 {% block body %}
-    <h1>Jeu</h1>
+    <h1>Affichage du Jeu : {{ jeu.nom }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ jeu.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ jeu.nom }}</td>
-            </tr>
-            <tr>
-                <th>Nb_participant</th>
-                <td>{{ jeu.nbParticipant }}</td>
-            </tr>
-        </tbody>
+    <table>
+        <!-- Affichage du type de jeu -->
+        <tr>
+            <th>Type</th>
+            <td>{{ attributs.type }}</td>
+        </tr>
+
+        <!-- Affichage du nombre de participants -->
+        <tr>
+            <th>Participants</th>
+            <td>{{ jeu.nbParticipant }}</td>
+        </tr>
+
+        <!-- Affichage des autres attributs dynamiquement -->
+        {% for key, value in attributs %}
+            {% if key != 'type' %}  {# On évite d'afficher le 'type' encore une fois #}
+                <tr>
+                    <th>{{ key|capitalize }}</th>
+                    <td>{{ value }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
     </table>
 
-    <a href="{{ path('app_jeu_index') }}">back to list</a>
-
-    <a href="{{ path('app_jeu_edit', {'id': jeu.id}) }}">edit</a>
-
-    {{ include('jeu/_delete_form.html.twig') }}
 {% endblock %}

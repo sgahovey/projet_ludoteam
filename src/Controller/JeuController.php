@@ -43,12 +43,18 @@ final class JeuController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_jeu_show', methods: ['GET'])]
-    public function show(Jeu $jeu): Response
+    public function show(Jeu $jeu, JeuRepository $jeuRepository): Response
     {
+        // Récupérer les attributs dynamiquement en fonction du type du jeu
+        $attributs = $jeuRepository->findAttributsByJeuType($jeu->getId());
+
+        // Renvoyer la réponse avec les attributs spécifiques au jeu
         return $this->render('jeu/show.html.twig', [
             'jeu' => $jeu,
+            'attributs' => $attributs,
         ]);
     }
+    
 
     #[Route('/{id}/edit', name: 'app_jeu_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Jeu $jeu, EntityManagerInterface $entityManager): Response
