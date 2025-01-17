@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use App\Entity\JeuCarte;
 use App\Entity\JeuDuel;
+use App\Entity\JeuCarte;
 use App\Entity\JeuPlateau;
-use App\Repository\JeuRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\JeuRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: JeuRepository::class)]
 //Héritage
@@ -32,6 +34,33 @@ class Jeu
     #[ORM\Column]
     private ?int $nb_participant = null;
 
+
+  
+    // Relation ManyToMany avec User pour les participants
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'jeux')]
+    #[ORM\JoinTable(name: 'jeu_participants')]
+    private Collection $participants;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
+
+ public function addParticipant(User $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(User $participant): self
+    {
+        $this->participants->removeElement($participant);
+
+        return $this;
+    }
 
     public function getId(): ?int
     {

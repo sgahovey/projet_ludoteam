@@ -25,6 +25,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+    // Relation ManyToMany avec Jeu pour récupérer les jeux auxquels l'utilisateur participe
+    #[ORM\ManyToMany(targetEntity: Jeu::class, mappedBy: 'participants')]
+    private Collection $jeux;
+    public function __construct()
+    {
+        $this->jeux = new ArrayCollection();
+    }
+
+    // Getter pour jeux
+    public function getJeux(): Collection
+    {
+        return $this->jeux;
+    }
+
     /**
      * @var string The hashed password
      */
