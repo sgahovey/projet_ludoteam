@@ -9,21 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 class JeuPlateau extends Jeu
 
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
-
     #[ORM\Column(length: 255)]
     private ?string $dimension_plateau = null;
 
     #[ORM\Column]
     private ?int $nb_case = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getDimensionPlateau(): ?string
     {
