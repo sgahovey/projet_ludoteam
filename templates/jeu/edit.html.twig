@@ -1,13 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Jeu{% endblock %}
+{% block title %}Modifier le Jeu{% endblock %}
 
 {% block body %}
-    <h1>Edit Jeu</h1>
+    <h1>Modifier le Jeu</h1>
 
-    {{ include('jeu/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.nbParticipant) }}
 
-    <a href="{{ path('app_jeu_index') }}">back to list</a>
+        {# Affichage des champs dynamiques #}
+        {% if form.type.vars.value == 'carte' %}
+            {{ form_row(form.format) }}
+            {{ form_row(form.joker_inclus) }}
+        {% elseif form.type.vars.value == 'duel' %}
+            {{ form_row(form.dureeMax) }}
+            {{ form_row(form.type_adversaire) }}
+        {% elseif form.type.vars.value == 'plateau' %}
+            {{ form_row(form.dimension_plateau) }}
+            {{ form_row(form.nb_case) }}
+        {% endif %}
 
-    {{ include('jeu/_delete_form.html.twig') }}
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_jeu_index') }}">Retour à la liste des jeux</a>
 {% endblock %}

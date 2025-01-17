@@ -38,4 +38,10 @@ class JeuCarte extends Jeu
 
         return $this;
     }
+    // Ajoutez un getter pour la propriété 'type' héritée de la classe parente 'Jeu'
+    public function getType(): string
+    {
+        return 'carte';  // Cette valeur peut être utilisée pour spécifier le type dans le formulaire
+    }
+
 }

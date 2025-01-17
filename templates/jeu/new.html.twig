@@ -1,11 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Jeu{% endblock %}
+{% block title %}Créer un nouveau Jeu{% endblock %}
 
 {% block body %}
-    <h1>Create new Jeu</h1>
+    <h1>Créer un nouveau Jeu</h1>
 
-    {{ include('jeu/_form.html.twig') }}
+    {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.nbParticipant) }}
+        {{ form_row(form.type) }}
 
-    <a href="{{ path('app_jeu_index') }}">back to list</a>
+        {# Affichage des champs dynamiques #}
+        {% if form.type.vars.value == 'carte' %}
+            {{ form_row(form.format) }}
+            {{ form_row(form.joker_inclus) }}
+        {% elseif form.type.vars.value == 'duel' %}
+            {{ form_row(form.dureeMax) }}
+            {{ form_row(form.type_adversaire) }}
+        {% elseif form.type.vars.value == 'plateau' %}
+            {{ form_row(form.dimension_plateau) }}
+            {{ form_row(form.nb_case) }}
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary">Créer le Jeu</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_jeu_index') }}">Retour à la liste des jeux</a>
 {% endblock %}

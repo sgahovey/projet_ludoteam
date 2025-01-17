@@ -65,12 +65,11 @@ final class JeuController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_jeu_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_jeu_index');
         }
 
         return $this->render('jeu/edit.html.twig', [
-            'jeu' => $jeu,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
