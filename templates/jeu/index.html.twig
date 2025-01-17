@@ -11,27 +11,37 @@
                 <th>Id</th>
                 <th>Nom</th>
                 <th>Nb_participant</th>
-                <th>actions</th>
+                <th>Participants</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for jeu in jeux %}
-            <tr>
-                <td>{{ jeu.id }}</td>
-                <td>{{ jeu.nom }}</td>
-                <td>{{ jeu.nbParticipant }}</td>
-                <td>{{ jeu.type }}</td>
-
-                <td>
-                    <a href="{{ path('app_jeu_show', {'id': jeu.id}) }}">show</a>
-                    <a href="{{ path('app_jeu_edit', {'id': jeu.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
+            {% for jeu in jeux %}
+                <tr>
+                    <td>{{ jeu.id }}</td>
+                    <td>{{ jeu.nom }}</td>
+                    <td>{{ jeu.nbParticipant }}</td>
+                    <td>
+                        {% if jeu.participants|length > 0 %}
+                            <ul>
+                                {% for participant in jeu.participants %}
+                                    <li>{{ participant.name }} </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Aucun participant</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('app_jeu_show', {'id': jeu.id}) }}">show</a>
+                        <a href="{{ path('app_jeu_edit', {'id': jeu.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">No records found</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 

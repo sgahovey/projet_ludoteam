@@ -36,31 +36,37 @@ class Jeu
 
 
   
-    // Relation ManyToMany avec User pour les participants
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'jeux')]
-    #[ORM\JoinTable(name: 'jeu_participants')]
-    private Collection $participants;
+   // Définir la relation ManyToMany dans la classe parente
+   #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'jeux')]
+   #[ORM\JoinTable(name: 'jeu_participants')]
+   private Collection $participants;
 
-    public function __construct()
-    {
-        $this->participants = new ArrayCollection();
-    }
+   public function __construct()
+   {
+       $this->participants = new ArrayCollection();
+       
+   }
 
- public function addParticipant(User $participant): self
-    {
-        if (!$this->participants->contains($participant)) {
-            $this->participants[] = $participant;
-        }
+   public function getParticipants(): Collection
+   {
+       return $this->participants;
+   }
 
-        return $this;
-    }
+   public function addParticipant(User $participant): self
+   {
+       if (!$this->participants->contains($participant)) {
+           $this->participants[] = $participant;
+       }
 
-    public function removeParticipant(User $participant): self
-    {
-        $this->participants->removeElement($participant);
+       return $this;
+   }
 
-        return $this;
-    }
+   public function removeParticipant(User $participant): self
+   {
+       $this->participants->removeElement($participant);
+
+       return $this;
+   }
 
     public function getId(): ?int
     {

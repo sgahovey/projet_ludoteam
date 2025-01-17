@@ -17,8 +17,11 @@ final class JeuController extends AbstractController
     #[Route(name: 'app_jeu_index', methods: ['GET'])]
     public function index(JeuRepository $jeuRepository): Response
     {
+        // Récupérer tous les jeux avec leurs participants
+        $jeux = $jeuRepository->findAll();
+
         return $this->render('jeu/index.html.twig', [
-            'jeux' => $jeuRepository->findAll(),
+            'jeux' => $jeux,
         ]);
     }
 
@@ -45,14 +48,18 @@ final class JeuController extends AbstractController
     #[Route('/{id}', name: 'app_jeu_show', methods: ['GET'])]
     public function show(Jeu $jeu, JeuRepository $jeuRepository): Response
     {
-        // Récupérer les attributs dynamiquement en fonction du type du jeu
-        $attributs = $jeuRepository->findAttributsByJeuType($jeu->getId());
+       // Récupérer les attributs dynamiques du jeu
+       $attributs = $jeuRepository->findAttributsByJeuType($jeu->getId());
 
-        // Renvoyer la réponse avec les attributs spécifiques au jeu
-        return $this->render('jeu/show.html.twig', [
-            'jeu' => $jeu,
-            'attributs' => $attributs,
-        ]);
+       // Récupérer les participants du jeu
+       $participants = $jeu->getParticipants();  // Cette méthode renvoie la liste des participants
+
+       // Passer les données nécessaires à la vue
+       return $this->render('jeu/show.html.twig', [
+           'jeu' => $jeu,
+           'attributs' => $attributs,
+           'participants' => $participants,  // Assurez-vous de passer cette variable
+       ]);
     }
     
 

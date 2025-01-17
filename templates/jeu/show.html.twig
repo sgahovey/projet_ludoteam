@@ -10,13 +10,23 @@
             <td>{{ attributs.type }}</td>
         </tr>
 
-        <!-- Affichage du nombre de participants -->
+        <!-- Affichage des participants -->
         <tr>
             <th>Participants</th>
-            <td>{{ jeu.nbParticipant }}</td>
+            <td>
+                {% if participants|length > 0 %}
+                    <ul>
+                        {% for participant in participants %}
+                            <li>{{ participant.name }} {{ participant.name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Aucun participant</p>
+                {% endif %}
+            </td>
         </tr>
 
-        <!-- Affichage des autres attributs dynamiquement -->
+        <!-- Affichage des autres attributs dynamiques -->
         {% for key, value in attributs %}
             {% if key != 'type' %}  {# On évite d'afficher le 'type' encore une fois #}
                 <tr>
