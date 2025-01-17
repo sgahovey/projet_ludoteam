@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -25,9 +27,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+ 
     // Relation ManyToMany avec Jeu pour récupérer les jeux auxquels l'utilisateur participe
     #[ORM\ManyToMany(targetEntity: Jeu::class, mappedBy: 'participants')]
     private Collection $jeux;
+
     public function __construct()
     {
         $this->jeux = new ArrayCollection();
@@ -38,7 +42,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->jeux;
     }
-
     /**
      * @var string The hashed password
      */
