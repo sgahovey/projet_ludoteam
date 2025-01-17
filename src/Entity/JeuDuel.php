@@ -6,7 +6,8 @@ use App\Repository\JeuDuelRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: JeuDuelRepository::class)]
-class JeuDuel
+class JeuDuel extends Jeu
+
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
