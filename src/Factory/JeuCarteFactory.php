@@ -32,10 +32,15 @@ final class JeuCarteFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'format' => self::faker()->text(255),
+            'format' => self::faker()->randomElement(['Tarot', 'Poker', 'Uno']),
             'joker_inclus' => self::faker()->boolean(),
-            'nb_participant' => self::faker()->randomNumber(),
-            'nom' => self::faker()->text(255),
+            'nb_participant' => self::faker()->numberBetween(2, 10),
+            'nom' => self::faker()->words(3, true), // Exemple : "Jeu de cartes fantastique"
+
+            // 'format' => self::faker()->text(255),
+            // 'joker_inclus' => self::faker()->boolean(),
+            // 'nb_participant' => self::faker()->randomNumber(),
+            // 'nom' => self::faker()->text(255),
         ];
     }
 
