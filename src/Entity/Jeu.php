@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\JeuRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: JeuRepository::class)]
@@ -21,6 +22,12 @@ class Jeu
 
     #[ORM\Column(length: 255)]
     private ?string $type = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?bool $disponibilite = null;
 
     public function getId(): ?int
     {
@@ -59,6 +66,30 @@ class Jeu
     public function setType(string $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function isDisponibilite(): ?bool
+    {
+        return $this->disponibilite;
+    }
+
+    public function setDisponibilite(bool $disponibilite): static
+    {
+        $this->disponibilite = $disponibilite;
 
         return $this;
     }
