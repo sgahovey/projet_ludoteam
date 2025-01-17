@@ -32,9 +32,6 @@ class Jeu
     #[ORM\Column]
     private ?int $nb_participant = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $type = null;
-
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -66,18 +63,6 @@ class Jeu
     public function setNbParticipant(int $nb_participant): static
     {
         $this->nb_participant = $nb_participant;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): static
-    {
-        $this->type = $type;
 
         return $this;
     }
