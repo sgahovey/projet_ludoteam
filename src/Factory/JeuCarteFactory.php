@@ -2,13 +2,13 @@
 
 namespace App\Factory;
 
-use App\Entity\Jeu;
+use App\Entity\JeuCarte;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<Jeu>
+ * @extends PersistentProxyObjectFactory<JeuCarte>
  */
-final class JeuFactory extends PersistentProxyObjectFactory
+final class JeuCarteFactory extends PersistentProxyObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
@@ -21,7 +21,7 @@ final class JeuFactory extends PersistentProxyObjectFactory
 
     public static function class(): string
     {
-        return Jeu::class;
+        return JeuCarte::class;
     }
 
     /**
@@ -32,6 +32,8 @@ final class JeuFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
+            'format' => self::faker()->text(255),
+            'joker_inclus' => self::faker()->boolean(),
             'nb_participant' => self::faker()->randomNumber(),
             'nom' => self::faker()->text(255),
         ];
@@ -43,7 +45,7 @@ final class JeuFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(Jeu $jeu): void {})
+            // ->afterInstantiate(function(JeuCarte $jeuCarte): void {})
         ;
     }
 }
