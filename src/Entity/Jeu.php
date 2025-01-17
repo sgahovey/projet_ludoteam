@@ -2,11 +2,23 @@
 
 namespace App\Entity;
 
+use App\Entity\JeuCarte;
+use App\Entity\JeuDuel;
+use App\Entity\JeuPlateau;
 use App\Repository\JeuRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: JeuRepository::class)]
+//Héritage
+#[ORM\InheritanceType("SINGLE_TABLE")]
+#[ORM\DiscriminatorColumn(name: "type", type:"string")]
+#[ORM\DiscriminatorMap([
+    "carte"         =>  JeuCarte::class,
+    "duel"          =>  JeuDuel::class,
+    "plateau"       => JeuPlateau::class
+    ])]
+
 class Jeu
 {
     #[ORM\Id]
