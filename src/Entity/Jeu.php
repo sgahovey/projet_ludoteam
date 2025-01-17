@@ -32,11 +32,6 @@ class Jeu
     #[ORM\Column]
     private ?int $nb_participant = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $description = null;
-
-    #[ORM\Column]
-    private ?bool $disponibilite = null;
 
     public function getId(): ?int
     {
@@ -67,27 +62,4 @@ class Jeu
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function isDisponibilite(): ?bool
-    {
-        return $this->disponibilite;
-    }
-
-    public function setDisponibilite(bool $disponibilite): static
-    {
-        $this->disponibilite = $disponibilite;
-
-        return $this;
-    }
 }
